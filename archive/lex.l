@@ -6,34 +6,34 @@
 %option nounput
 
 %%
-[a-zA-Z][a-zA-Z0-9]* printf("tID:'%s'",yytext);
+[a-zA-Z][a-zA-Z0-9]* printf("tID:'%s'\n",yytext);
 [0-9]+ printf("tNB: '%s[0x%x]'\n", yytext, atoi(yytext)); 
-if printf("tIF");
-else printf("tELSE");
-while printf("tWHILE");
-print printf("tPRINT");
-return printf("tRETURN");
-int printf("tINT");
-void printf("tVOID");
+if printf("tIF\n");
+else printf("tELSE\n");
+while printf("tWHILE\n");
+print printf("tPRINT\n");
+return printf("tRETURN\n");
+int printf("tINT\n");
+void printf("tVOID\n");
 "//".*
 "/*"([^*]|"*"+[^*/])*"*/" 
-+ printf("tADD");
-- printf("tSUB");
-* printf("tMUL");
-/ printf("tDIV");
-< printf("tLT");
-> printf("tGT");
-!= printf("tNE");
-== printf("tEQ");
->= printf("tGE");
-<= printf("tLE");
-= printf("tAFFECTATION");
-&& printf("tAND");
-|| printf("tOR");
-! printf("tNOT");
-{ printf("tLBRACE");
-} printf("tRBRACE");
-( printf("tLPAREN");
-) printf("tRPAREN");
+\+ printf("tADD\n");
+- printf("tSUB\n");
+\* printf("tMUL\n");
+/ printf("tDIV\n");
+< printf("tLT\n");
+> printf("tGT\n");
+!= printf("tNE\n");
+== printf("tEQ\n");
+>= printf("tGE\n");
+<= printf("tLE\n");
+= printf("tAFFECTATION\n");
+&& printf("tAND\n");
+\|\| printf("tOR\n");
+! printf("tNOT\n");
+\{ printf("tLBRACE");
+\} printf("tRBRACE");
+\( printf("tLPAREN");
+\) printf("tRPAREN");
 ; printf("tSEMI");
 , printf("tCOMMA");
