@@ -5,18 +5,20 @@
 %option noinput
 %option nounput
 
+%x IN_IF
+
 %%
 [a-zA-Z][a-zA-Z0-9]* {printf("tID:'%s'\n",yytext);}
 [0-9]+ {printf("tNB: '%s[0x%x]'\n", yytext, atoi(yytext)); }
-if        printf("tIF\n");
-else      printf("tELSE\n");
-while     printf("tWHILE\n");
-print     printf("tPRINT\n");
-return    printf("tRETURN\n");
-int       printf("tINT\n");
-void      printf("tVOID\n");
-"//".*
-"/*"([^*]|"*"+[^*/])*"*/" 
+<IN_IF>"if"       { printf("tIF\n");BEGIN IN_IF;}
+<IN_IF>"else"    { printf("tELSE\n");BEGIN(INITIAL);}
+"while"    { printf("tWHILE\n");}
+"print"    { printf("tPRINT\n");}
+"return"   { printf("tRETURN\n");}
+"int"      { printf("tINT\n");}
+"void"     { printf("tVOID\n");}
+"//".*  
+"/*"([^*]|"*"+[^*/])*"*/"  
 "+"   { printf("tADD\n"); }
 "-"   { printf("tSUB\n"); }
 "*"   { printf("tMUL\n"); }
@@ -39,8 +41,6 @@ void      printf("tVOID\n");
 ","   { printf("tCOMMA\n"); }
 %%
 
-
-%%
 
 int main() {
     yylex();
