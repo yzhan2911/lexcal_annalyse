@@ -6,7 +6,7 @@
 %option nounput
 
 %%
-[a-zA-Z][a-zA-Z0-9]* printf("tID:'%s'\n",yytext);
+[a-zA-Z][a-zA-Z0-9]* {printf("tID:'%s'\n",yytext)};
 [0-9]+ printf("tNB: '%s[0x%x]'\n", yytext, atoi(yytext)); 
 if printf("tIF\n");
 else printf("tELSE\n");
@@ -20,8 +20,8 @@ void printf("tVOID\n");
 \+ printf("tADD\n");
 - printf("tSUB\n");
 \* printf("tMUL\n");
-/ printf("tDIV\n");
-< printf("tLT\n");
+\/ printf("tDIV\n");
+<[\0] printf("tLT\n");
 > printf("tGT\n");
 != printf("tNE\n");
 == printf("tEQ\n");
