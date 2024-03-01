@@ -17,7 +17,7 @@ gcc -Wall -Werror lex.c -o lex || (err "step invalid: gcc")
 rm lex.c
 
 for f in samples/*.c; do
-  ./lex $f > $TMP
-  diff $TMP $f.out || err "invalid test $f"
+  ./lex $f> $TMP
+  diff -ub $TMP $f.out || err "invalid test $f"
 done
 

@@ -1,7 +1,3 @@
-%{
-  #include <stdio.h>
-  #include <stdlib.h>
-%}
 
 %option noyywrap
 %option noinput
@@ -9,17 +5,24 @@
 
 %%
 
-"if"                    { printf("tIF\n");   }
-"else"                  { printf("tELSE\n");  }
-"while"                 { printf("tWHILE\n"); }
-"print"                 { printf("tPRINT\n"); }
-"return"                { printf("tRETURN\n"); }
-"int"                   { printf("tINT\n"); }
-"void"                  { printf("tVOID\n"); }
-[a-zA-Z][a-zA-Z0-9]* {printf("tID:'%s'\n",yytext);}
-[0-9]+ {printf("tNB: '%s[0x%x]'\n", yytext, atoi(yytext)); }
-"//".*
-"/*"([^*]|"*"+[^*/])*"*/" 
+"if" { printf("tIF\n");   }
+"else" { printf("tELSE\n");  }
+"while" { printf("tWHILE\n"); }
+"print" { printf("tPRINT\n"); }
+"return" { printf("tRETURN\n"); }
+"int" { printf("tINT\n"); }
+"void" { printf("tVOID\n"); }
+
+[a-zA-Z][a-zA-Z0-9]* {printf("tID: '%s'\n",yytext);}
+
+[0-9]+ { printf("tNB: '%s[0x%x]'\n", yytext, atoi(yytext)); }
+
+0[xX][0-9a-fA-F]+ {
+    printf("tNB: '%d[%s]'\n", (int)strtol(yytext, NULL, 0), yytext);
+}
+"//"(.)*\n   ;                                                                  
+"/*"([^*]|[\n]|(\*+([^*/]|[\n])))*\*+"/" ;
+
 "+"   { printf("tADD\n"); }
 "-"   { printf("tSUB\n"); }
 "*"   { printf("tMUL\n"); }
@@ -29,22 +32,20 @@
 "!="  { printf("tNE\n"); }
 "=="  { printf("tEQ\n"); }
 ">="  { printf("tGE\n"); }
-"<="  { printf("tLE\n");}
-"="   { printf("tAFFECTATION\n");}
-"&&"  { printf("tAND\n");}
+"<="  { printf("tLE\n"); }
+"="   { printf("tASSIGN\n"); }
+"&&"  { printf("tAND\n"); }
 "||"  { printf("tOR\n"); }
 "!"   { printf("tNOT\n"); }
 "{"   { printf("tLBRACE\n"); }
 "}"   { printf("tRBRACE\n"); }
-"("   { printf("tLPAREN\n"); }
-")"   { printf("tRPAREN\n"); }
+"("   { printf("tLPAR\n"); }
+")"   { printf("tRPAR\n"); }
 ";"   { printf("tSEMI\n"); }
 ","   { printf("tCOMMA\n"); }
-.     { printf("Caractère non reconnu: %s\n", yytext); }
-
-
+[ \n] ;
+.     { printf("tERROR\n"); }
 %%
-
 
 int main(int argc, char **argv) {
   if (argc != 2) {
